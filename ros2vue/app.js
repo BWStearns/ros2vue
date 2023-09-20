@@ -1,3 +1,5 @@
+const rclnodejs = require('rclnodejs');
+const ros_util = require('./ros_util.js');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,6 +8,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+rclnodejs.init().then(() => {
+  const r2vNode = new rclnodejs.Node('r2vNode');
+  ros_util.findROSNodes(r2vNode);
+});
 
 var app = express();
 
