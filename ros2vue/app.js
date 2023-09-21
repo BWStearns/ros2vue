@@ -1,4 +1,3 @@
-const rclnodejs = require('rclnodejs');
 const ros_util = require('./ros_util.js');
 var createError = require('http-errors');
 var express = require('express');
@@ -8,13 +7,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-rclnodejs.init().then(() => {
-  const r2vNode = new rclnodejs.Node('r2vNode');
-  ros_util.findROSNodes(r2vNode);
-});
+var rosServicesRouter = require('./routes/ros_services');
 
 var app = express();
+
+// ros_util.findROSNodes();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +25,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/ros_services', rosServicesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
