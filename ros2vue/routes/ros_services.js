@@ -3,9 +3,14 @@ var router = express.Router();
 const ros_util = require('../ros_util.js');
 
 /* GET existing ROS Nodes and Services. */
-router.get('/', function(req, res, next) {
+router.get('/services', function(req, res, next) {
     // respond with json
-    res.json(ros_util.findROSNodes());
+    res.json(ros_util.get_all_service_interfaces());
+});
+
+router.get('/topics', function(req, res, next) {
+    // respond with json
+    res.json(ros_util.findROSTopics());
 });
 
 module.exports = router;
